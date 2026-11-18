@@ -36,7 +36,9 @@ Depth-10/
 
 ## Запуск и проверка
 
-Смоук-тест (доказывает, что связка агент→движок жива):
+### Смоук-тест движка
+
+Проверяет, что Redot запускается и выполняет GDScript. MCP не затрагивает.
 
 ```
 redot.windows.editor.x86_64.llvm.console.exe --headless --script "res://scripts/smoke.gd" --path "<путь к проекту>"
@@ -44,10 +46,17 @@ redot.windows.editor.x86_64.llvm.console.exe --headless --script "res://scripts/
 
 Ожидание: в выводе `depth-10 ok`, код выхода 0.
 
-Проверка синтаксиса файла — через MCP: `redot_code_intel(action="validate", path="res://<файл>")`.
-Логи запущенной игры — `redot_project_config(action="output")`.
+### Смоук-тест MCP (агент ↔ движок)
 
-Slash-команды: `/run`, `/check` (см. `.kilo/command/`).
+Проверяет связку агента с Redot. Выполняется из Kilo Code после подключения.
+
+1. В пикере MCP-контроллеров видны пять инструментов Redot:
+   `redot_scene_action`, `redot_resource_action`, `redot_code_intel`,
+   `redot_project_config`, `redot_game_control`.
+2. Запросить: `redot_code_intel(action="validate", path="res://scripts/smoke.gd")`.
+3. Ожидание: ответ без ошибок валидации; `get_docs` возвращает документацию класса.
+
+Среда считается готовой к первым задачам только после обоих тестов.
 
 ## Как здесь работают с AI
 
