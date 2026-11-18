@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "redot": {
+      "command": "E:\\GameDevelopment\\RedotEngine\\redot.windows.editor.x86_64.llvm.console.exe",
+      "args": [
+        "--headless",
+        "--mcp-server",
+        "--quiet",
+        "--path",
+        "E:\\GameDevelopment\\RedotEngine\\Projects\\depth-10"
+      ],
+      "enabled": true
+    }
+  }
+}

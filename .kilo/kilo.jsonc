@@ -1,0 +1,14 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "permission": {
+    "bash": {
+      "E:\\GameDevelopment\\RedotEngine\\redot.windows.editor.x86_64.llvm.console.exe --headless *": "allow",
+      "E:\\GameDevelopment\\RedotEngine\\redot.windows.editor.x86_64.llvm.exe --path *": "allow",
+      "git status *": "allow",
+      "git diff *": "allow",
+      "git add *": "allow",
+      "git commit *": "allow",
+      "find *": "allow"
+    }
+  }
+}
