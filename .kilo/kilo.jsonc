@@ -1,5 +1,20 @@
 {
   "$schema": "https://app.kilo.ai/config.json",
+  "mcp": {
+    "redot": {
+      "type": "local",
+      "command": [
+        "E:\\GameDevelopment\\RedotEngine\\redot.windows.editor.x86_64.llvm.console.exe",
+        "--headless",
+        "--mcp-server",
+        "--quiet",
+        "--path",
+        "E:\\GameDevelopment\\RedotEngine\\Projects\\depth-10"
+      ],
+      "enabled": true,
+      "timeout": 10000
+    }
+  },
   "permission": {
     "bash": {
       "E:\\GameDevelopment\\RedotEngine\\redot.windows.editor.x86_64.llvm.console.exe --headless *": "allow",
