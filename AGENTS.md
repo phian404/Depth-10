@@ -107,6 +107,8 @@ HUD отсутствует. Один мотивированный источни
 
 Документы сцен: `SC000_prologue_1999.md`, `SC001_signing.md`, `SC003_cascade.md`, `SC_final.md`, `core_loop.md`.
 
+Открытые вопросы — `docs/open_questions.md`. Протокол внутри обязателен: не отвечать на открытый вопрос молча, одна строка на вопрос, статус `LOCKED` не трогать, решение принимает автор.
+
 ## redot_code_intel get_docs — только при неопределённости
 
 **Не вызывать get_docs для базовых нод:** `Node3D`, `Timer`, `Spatial`, `RigidBody`, `Area`, `Camera`, `Sprite2D`/`Sprite3D`, `AudioStreamPlayer`, `AnimationPlayer`, `Label`, `Button`, `CollisionShape` — их API стабилен и не требует проверки.
