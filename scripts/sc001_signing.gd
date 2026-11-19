@@ -56,6 +56,9 @@ func _ready() -> void:
 	tap_player.max_distance = 40.0
 	finger.add_child(tap_player)
 	dropout_timer = rng.randf_range(8.0, 30.0)
+	# 3D-папка уступает место оверлею, при закрытии возвращается на стол
+	doc.opened.connect(func() -> void: folder.visible = false)
+	doc.closed.connect(func() -> void: folder.visible = true)
 	# Проявление из чёрного за 2 с
 	fade.color.a = 1.0
 	var tw: Tween = create_tween()
