@@ -36,6 +36,7 @@
       "url": "http://localhost:6333"
     },
     "dimension": 1024,
+    "searchMaxResults": 20,
     "fileExtensions": [
       ".bash", ".bazel", ".bzl", ".build", ".gradle", ".ninja", ".sh", ".zsh",
       ".css", ".ejs", ".erb", ".htm", ".html", ".js", ".jsx", ".ts", ".tsx", ".vue",

@@ -22,9 +22,10 @@ Depth-10/
 ├── mcp.json               MCP-сервер Redot (дублируется в .kilo/kilo.jsonc)
 ├── project.godot
 ├── .kilo/
-│   ├── kilo.jsonc         права bash + MCP
-│   ├── command/           slash-команды /run и /check
-│   └── plans/             активные планы; завершённые — в plans/archive/
+│   ├── kilo.jsonc         права bash + MCP + семантический индекс
+│   └── command/           slash-команды /run и /check
+├── .kilocodeignore        исключения из семантического индекса
+├── plans/                 активные планы; завершённые — в plans/archive/
 ├── scenes/                сцены (.tscn)
 ├── scripts/               GDScript: сцена + смоук-тест
 ├── materials/             M_*.tres — материалы палитры
@@ -71,6 +72,7 @@ redot.windows.editor.x86_64.llvm.console.exe --headless --script "res://scripts/
 - код не коммитится, пока не прошёл `validate`
 - после каждого работающего состояния — коммит
 - планы: активные в `plans/`, завершённые — в `plans/archive/` со статусом (архив вне семантического индекса)
+- `semantic_search` — для поиска по докам и коду; индекс обновляется только при перезагрузке окна (см. AGENTS.md)
 - чтение файлов — по релевантности (см. AGENTS.md)
 - `redot_code_intel get_docs` — только при неопределённости (см. AGENTS.md)
 
