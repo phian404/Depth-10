@@ -25,5 +25,16 @@
       "git commit *": "allow",
       "find *": "allow"
     }
+  },
+  "indexing": {
+    "model": "nomic-embed-text-v2-moe:latest",
+    "ollama": {
+      "baseUrl": "http://localhost:11434"
+    },
+    "vectorStore": "qdrant",
+    "qdrant": {
+      "url": "http://localhost:6333"
+    },
+    "dimension": 768
   }
 }
