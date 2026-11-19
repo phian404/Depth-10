@@ -27,7 +27,7 @@
     }
   },
   "indexing": {
-    "model": "nomic-embed-text-v2-moe:latest",
+    "model": "BGE-M3:latest",
     "ollama": {
       "baseUrl": "http://localhost:11434"
     },
@@ -35,6 +35,15 @@
     "qdrant": {
       "url": "http://localhost:6333"
     },
-    "dimension": 768
+    "dimension": 1024,
+    "fileExtensions": [
+      ".bash", ".bazel", ".bzl", ".build", ".gradle", ".ninja", ".sh", ".zsh",
+      ".css", ".ejs", ".erb", ".htm", ".html", ".js", ".jsx", ".ts", ".tsx", ".vue",
+      ".c", ".cpp", ".cs", ".go", ".h", ".hpp", ".m", ".mm", ".rs", ".swift", ".zig",
+      ".ex", ".exs", ".java", ".kt", ".kts", ".scala", ".dart", ".el", ".elm", ".lua",
+      ".php", ".py", ".r", ".rb", ".vb", ".ml", ".mli", ".ql", ".rdl", ".res", ".resi",
+      ".sol", ".tla", ".json", ".markdown", ".md", ".rst", ".sql", ".toml", ".yaml", ".yml",
+      ".gd", ".gdshader", ".godot"
+    ]
   }
 }

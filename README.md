@@ -70,7 +70,7 @@ redot.windows.editor.x86_64.llvm.console.exe --headless --script "res://scripts/
 - `.tscn`: точечно — `redot_scene_action`, массово — скрипт-генератор; ручная правка текста запрещена
 - код не коммитится, пока не прошёл `validate`
 - после каждого работающего состояния — коммит
-- планы: активные в `.kilo/plans/`, завершённые — в `.kilo/plans/archive/` со статусом
+- планы: активные в `plans/`, завершённые — в `plans/archive/` со статусом (архив вне семантического индекса)
 - чтение файлов — по релевантности (см. AGENTS.md)
 - `redot_code_intel get_docs` — только при неопределённости (см. AGENTS.md)
 
