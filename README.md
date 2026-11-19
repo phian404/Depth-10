@@ -28,10 +28,10 @@ Depth-10/
 ├── scripts/
 │   └── smoke.gd           смоук-тест связки (extends SceneTree)
 └── docs/
-    ├── canon/00_master.md     утверждённый лор и ограничения
-    ├── art/art_direction.md   визуальный канон и технические бюджеты
-    ├── audio/audio_direction.md  звуковой канон
-    └── scenes/SC001_signing.md   спецификация первой сцены
+        ├── canon/00_master.md     утверждённый лор и ограничения
+        ├── art/art_direction.md   визуальный канон и технические бюджеты
+        ├── audio/audio_direction.md  звуковой канон
+        └── scenes/SC001_signing.md   спецификация первой сцены
 ```
 
 ## Запуск и проверка
@@ -66,6 +66,8 @@ redot.windows.editor.x86_64.llvm.console.exe --headless --script "res://scripts/
 - сцены правятся через `redot_scene_action`, не текстом
 - код не выдаётся, пока не прошёл `validate`
 - после каждого работающего состояния — коммит
+- чтение файлов — по релевантности (см. AGENTS.md)
+- `redot_code_intel get_docs` — только при неопределённости (см. AGENTS.md)
 
 ## Дизайн
 
