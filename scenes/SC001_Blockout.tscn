@@ -1,8 +1,10 @@
-[gd_scene load_steps=25 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="AudioStream" path="res://audio/SFX_papergrab.wav" id="16_5ff1c"]
 [ext_resource type="PackedScene" path="res://scenes/SC001_Document.tscn" id="21_ndhvo"]
 [ext_resource type="Script" path="res://scripts/sc001_document.gd" id="22_5ff1c"]
+[ext_resource type="AudioStream" path="res://audio/SFX_bldg_drone_g_01.ogg" id="24_w0dgr"]
+[ext_resource type="Script" path="res://scripts/sc001_drone.gd" id="25_stmjl"]
 [ext_resource type="Material" path="res://materials/M_bulb.tres" id="mat_bulb"]
 [ext_resource type="Material" path="res://materials/M_ceiling.tres" id="mat_ceiling"]
 [ext_resource type="Material" path="res://materials/M_door.tres" id="mat_door"]
@@ -403,5 +405,9 @@ offset_right = 1.0
 offset_bottom = 1.0
 mouse_filter = 2
 color = Color(0.92, 0.9, 0.85, 0.85)
+
+[node name="Drone" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_w0dgr")
+script = ExtResource("25_stmjl")
 
 [connection signal="opened" from="DocumentLayer/SC001_Document" to="Folder/PaperGrab" method="play"]
