@@ -140,7 +140,7 @@ material_override = ExtResource("mat_metal")
 mesh = ExtResource("mesh_box")
 
 [node name="Lamp" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.75, -0.15)
+transform = Transform3D(0.9210903, 0, -0.38934904, 0, 1, 0, 0.38934904, 0, 0.9210903, -0.55, 0.75, -0.15)
 
 [node name="Base" type="MeshInstance3D" parent="Lamp"]
 transform = Transform3D(0.18, 0, 0, 0, 0.02, 0, 0, 0, 0.18, 0, 0.01, 0)
