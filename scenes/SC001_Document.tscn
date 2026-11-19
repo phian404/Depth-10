@@ -66,29 +66,28 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_e2lou")
 expand_mode = 1
 
-[node name="Paper" type="Panel" parent="."]
+[node name="PaperPivot" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(320, 188)
+
+[node name="Paper" type="Panel" parent="PaperPivot"]
 unique_name_in_owner = true
 clip_contents = true
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -95.0
-offset_top = -126.0
+offset_top = -134.0
 offset_right = 95.0
-offset_bottom = 142.0
+offset_bottom = 134.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_foq0n")
 
-[node name="Page1" type="Control" parent="Paper"]
+[node name="Page1" type="Control" parent="PaperPivot/Paper"]
 unique_name_in_owner = true
 anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="Box" type="VBoxContainer" parent="Paper/Page1"]
+[node name="Box" type="VBoxContainer" parent="PaperPivot/Paper/Page1"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -99,7 +98,7 @@ offset_bottom = -14.0
 mouse_filter = 2
 theme_override_constants/separation = 3
 
-[node name="@Label@2" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@2" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -108,12 +107,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "ДОГОВОР ПОДРЯДА"
 autowrap_mode = 3
 
-[node name="@Control@3" type="Control" parent="Paper/Page1/Box"]
+[node name="@Control@3" type="Control" parent="PaperPivot/Paper/Page1/Box"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@4" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@4" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -122,12 +121,12 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "№ 0427-О · 12.11.2006"
 autowrap_mode = 3
 
-[node name="@Control@5" type="Control" parent="Paper/Page1/Box"]
+[node name="@Control@5" type="Control" parent="PaperPivot/Paper/Page1/Box"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@6" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@6" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -136,7 +135,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ПОДРЯДЧИК"
 autowrap_mode = 3
 
-[node name="@Label@7" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@7" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -145,12 +144,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "Орлов К.А."
 autowrap_mode = 3
 
-[node name="@Control@8" type="Control" parent="Paper/Page1/Box"]
+[node name="@Control@8" type="Control" parent="PaperPivot/Paper/Page1/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@9" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@9" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -159,7 +158,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ЗАКАЗЧИК"
 autowrap_mode = 3
 
-[node name="@Label@10" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@10" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -168,12 +167,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "[ИЗЪЯТО]"
 autowrap_mode = 3
 
-[node name="@Control@11" type="Control" parent="Paper/Page1/Box"]
+[node name="@Control@11" type="Control" parent="PaperPivot/Paper/Page1/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@12" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@12" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -182,7 +181,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ОБЪЕКТ"
 autowrap_mode = 3
 
-[node name="@Label@13" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@13" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -191,12 +190,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "Глубина-10"
 autowrap_mode = 3
 
-[node name="@Control@14" type="Control" parent="Paper/Page1/Box"]
+[node name="@Control@14" type="Control" parent="PaperPivot/Paper/Page1/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@15" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@15" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -205,7 +204,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ПРЕДМЕТ"
 autowrap_mode = 3
 
-[node name="@Label@16" type="Label" parent="Paper/Page1/Box"]
+[node name="@Label@16" type="Label" parent="PaperPivot/Paper/Page1/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -214,12 +213,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "работы по договору подряда"
 autowrap_mode = 3
 
-[node name="@Control@17" type="Control" parent="Paper/Page1/Box"]
+[node name="@Control@17" type="Control" parent="PaperPivot/Paper/Page1/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Page2" type="Control" parent="Paper"]
+[node name="Page2" type="Control" parent="PaperPivot/Paper"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 0
@@ -227,7 +226,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="Box" type="VBoxContainer" parent="Paper/Page2"]
+[node name="Box" type="VBoxContainer" parent="PaperPivot/Paper/Page2"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -238,7 +237,7 @@ offset_bottom = -14.0
 mouse_filter = 2
 theme_override_constants/separation = 3
 
-[node name="@Label@18" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@18" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -247,12 +246,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "УСЛОВИЯ РАБОТЫ"
 autowrap_mode = 3
 
-[node name="@Control@19" type="Control" parent="Paper/Page2/Box"]
+[node name="@Control@19" type="Control" parent="PaperPivot/Paper/Page2/Box"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@20" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@20" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -261,12 +260,12 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "раздел 2"
 autowrap_mode = 3
 
-[node name="@Control@21" type="Control" parent="Paper/Page2/Box"]
+[node name="@Control@21" type="Control" parent="PaperPivot/Paper/Page2/Box"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@22" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@22" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -275,7 +274,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "СРОК"
 autowrap_mode = 3
 
-[node name="@Label@23" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@23" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -284,12 +283,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "2–3 недели"
 autowrap_mode = 3
 
-[node name="@Control@24" type="Control" parent="Paper/Page2/Box"]
+[node name="@Control@24" type="Control" parent="PaperPivot/Paper/Page2/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@25" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@25" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -298,7 +297,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "АВАНС"
 autowrap_mode = 3
 
-[node name="@Label@26" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@26" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -307,12 +306,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "500 000 руб."
 autowrap_mode = 3
 
-[node name="@Control@27" type="Control" parent="Paper/Page2/Box"]
+[node name="@Control@27" type="Control" parent="PaperPivot/Paper/Page2/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@28" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@28" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -321,7 +320,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ОПЛАТА"
 autowrap_mode = 3
 
-[node name="@Label@29" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@29" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -330,12 +329,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "по акту приёмки"
 autowrap_mode = 3
 
-[node name="@Control@30" type="Control" parent="Paper/Page2/Box"]
+[node name="@Control@30" type="Control" parent="PaperPivot/Paper/Page2/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@31" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@31" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -344,7 +343,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "РЕЖИМ"
 autowrap_mode = 3
 
-[node name="@Label@32" type="Label" parent="Paper/Page2/Box"]
+[node name="@Label@32" type="Label" parent="PaperPivot/Paper/Page2/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -353,12 +352,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "соблюдение режима объекта"
 autowrap_mode = 3
 
-[node name="@Control@33" type="Control" parent="Paper/Page2/Box"]
+[node name="@Control@33" type="Control" parent="PaperPivot/Paper/Page2/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Page3" type="Control" parent="Paper"]
+[node name="Page3" type="Control" parent="PaperPivot/Paper"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 0
@@ -366,7 +365,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="Box" type="VBoxContainer" parent="Paper/Page3"]
+[node name="Box" type="VBoxContainer" parent="PaperPivot/Paper/Page3"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -377,7 +376,7 @@ offset_bottom = -14.0
 mouse_filter = 2
 theme_override_constants/separation = 3
 
-[node name="@Label@34" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@34" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -386,12 +385,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "ОСОБЫЕ УСЛОВИЯ"
 autowrap_mode = 3
 
-[node name="@Control@35" type="Control" parent="Paper/Page3/Box"]
+[node name="@Control@35" type="Control" parent="PaperPivot/Paper/Page3/Box"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@36" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@36" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -400,12 +399,12 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "раздел 3"
 autowrap_mode = 3
 
-[node name="@Control@37" type="Control" parent="Paper/Page3/Box"]
+[node name="@Control@37" type="Control" parent="PaperPivot/Paper/Page3/Box"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@38" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@38" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -414,7 +413,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "СУБЪЕКТ"
 autowrap_mode = 3
 
-[node name="@Label@39" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@39" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -423,12 +422,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "А-0427-О"
 autowrap_mode = 3
 
-[node name="@Control@40" type="Control" parent="Paper/Page3/Box"]
+[node name="@Control@40" type="Control" parent="PaperPivot/Paper/Page3/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@41" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@41" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -437,7 +436,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ПРОГНОЗ"
 autowrap_mode = 3
 
-[node name="@Label@42" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@42" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -446,12 +445,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "нестабилен"
 autowrap_mode = 3
 
-[node name="@Control@43" type="Control" parent="Paper/Page3/Box"]
+[node name="@Control@43" type="Control" parent="PaperPivot/Paper/Page3/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@44" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@44" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -460,7 +459,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ТЕРАПИЯ"
 autowrap_mode = 3
 
-[node name="@Label@45" type="Label" parent="Paper/Page3/Box"]
+[node name="@Label@45" type="Label" parent="PaperPivot/Paper/Page3/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -469,12 +468,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "продолжение зависит от выполнения условий контракта"
 autowrap_mode = 3
 
-[node name="@Control@46" type="Control" parent="Paper/Page3/Box"]
+[node name="@Control@46" type="Control" parent="PaperPivot/Paper/Page3/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Page4" type="Control" parent="Paper"]
+[node name="Page4" type="Control" parent="PaperPivot/Paper"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 0
@@ -482,7 +481,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="Box" type="VBoxContainer" parent="Paper/Page4"]
+[node name="Box" type="VBoxContainer" parent="PaperPivot/Paper/Page4"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -493,7 +492,7 @@ offset_bottom = -14.0
 mouse_filter = 2
 theme_override_constants/separation = 3
 
-[node name="@Label@47" type="Label" parent="Paper/Page4/Box"]
+[node name="@Label@47" type="Label" parent="PaperPivot/Paper/Page4/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -502,12 +501,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "ПОДПИСАНИЕ"
 autowrap_mode = 3
 
-[node name="@Control@48" type="Control" parent="Paper/Page4/Box"]
+[node name="@Control@48" type="Control" parent="PaperPivot/Paper/Page4/Box"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@49" type="Label" parent="Paper/Page4/Box"]
+[node name="@Label@49" type="Label" parent="PaperPivot/Paper/Page4/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -516,12 +515,12 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "раздел 4"
 autowrap_mode = 3
 
-[node name="@Control@50" type="Control" parent="Paper/Page4/Box"]
+[node name="@Control@50" type="Control" parent="PaperPivot/Paper/Page4/Box"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="@Label@51" type="Label" parent="Paper/Page4/Box"]
+[node name="@Label@51" type="Label" parent="PaperPivot/Paper/Page4/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -530,7 +529,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "ПОДТВЕРЖДЕНИЕ"
 autowrap_mode = 3
 
-[node name="@Label@52" type="Label" parent="Paper/Page4/Box"]
+[node name="@Label@52" type="Label" parent="PaperPivot/Paper/Page4/Box"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -539,12 +538,12 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "с условиями ознакомлен, согласен"
 autowrap_mode = 3
 
-[node name="@Control@53" type="Control" parent="Paper/Page4/Box"]
+[node name="@Control@53" type="Control" parent="PaperPivot/Paper/Page4/Box"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SigBlock" type="Control" parent="Paper/Page4"]
+[node name="SigBlock" type="Control" parent="PaperPivot/Paper/Page4"]
 anchors_preset = 0
 offset_left = 14.0
 offset_top = 150.0
@@ -552,14 +551,14 @@ offset_right = 154.0
 offset_bottom = 210.0
 mouse_filter = 2
 
-[node name="SigZone" type="Control" parent="Paper/Page4/SigBlock"]
+[node name="SigZone" type="Control" parent="PaperPivot/Paper/Page4/SigBlock"]
 unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 140.0
 offset_bottom = 28.0
 mouse_filter = 2
 
-[node name="SigLine" type="ColorRect" parent="Paper/Page4/SigBlock"]
+[node name="SigLine" type="ColorRect" parent="PaperPivot/Paper/Page4/SigBlock"]
 layout_mode = 0
 offset_top = 28.0
 offset_right = 140.0
@@ -567,7 +566,7 @@ offset_bottom = 29.0
 mouse_filter = 2
 color = Color(0.44, 0.41, 0.35, 1)
 
-[node name="SigCaption" type="Label" parent="Paper/Page4/SigBlock"]
+[node name="SigCaption" type="Label" parent="PaperPivot/Paper/Page4/SigBlock"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 140.0
@@ -579,7 +578,7 @@ theme_override_colors/font_color = Color(0.44, 0.41, 0.35, 1)
 text = "подпись подрядчика"
 autowrap_mode = 3
 
-[node name="DateValue" type="Label" parent="Paper/Page4/SigBlock"]
+[node name="DateValue" type="Label" parent="PaperPivot/Paper/Page4/SigBlock"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -593,7 +592,7 @@ theme_override_colors/font_color = Color(0.165, 0.149, 0.125, 1)
 text = "12.11.2006"
 autowrap_mode = 3
 
-[node name="Stamp" type="PanelContainer" parent="Paper/Page4"]
+[node name="Stamp" type="PanelContainer" parent="PaperPivot/Paper/Page4"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 96.0
@@ -605,7 +604,7 @@ pivot_offset = Vector2(40, 12)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_fbi53")
 
-[node name="@Label@54" type="Label" parent="Paper/Page4/Stamp"]
+[node name="@Label@54" type="Label" parent="PaperPivot/Paper/Page4/Stamp"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = SubResource("SystemFont_pv5no")
@@ -613,7 +612,7 @@ theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.478, 0.263, 0.149, 1)
 text = "СОГЛАСОВАНО"
 
-[node name="EdgeL" type="ColorRect" parent="Paper"]
+[node name="EdgeL" type="ColorRect" parent="PaperPivot/Paper"]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_bottom = 1.0
@@ -622,7 +621,7 @@ offset_right = 2.0
 mouse_filter = 2
 color = Color(0.92, 0.9, 0.85, 1)
 
-[node name="EdgeR" type="ColorRect" parent="Paper"]
+[node name="EdgeR" type="ColorRect" parent="PaperPivot/Paper"]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_left = 1.0

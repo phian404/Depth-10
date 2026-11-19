@@ -29,8 +29,10 @@ func _initialize() -> void:
 
 	root.add_child(_dim())
 	root.add_child(_vignette())
+	var pivot := _pivot()
+	root.add_child(pivot)
 	var paper := _paper()
-	root.add_child(paper)
+	pivot.add_child(paper)
 	for i in 4:
 		paper.add_child(_page(i + 1))
 	paper.add_child(_edge("EdgeL", true))
@@ -82,20 +84,22 @@ func _vignette() -> TextureRect:
 	t.stretch_mode = TextureRect.STRETCH_SCALE
 	return t
 
+# Пивот наклона: центр листа в локальном нуле, shear применяется к нему
+func _pivot() -> Node2D:
+	var p := Node2D.new()
+	p.name = "PaperPivot"
+	p.unique_name_in_owner = true
+	p.position = Vector2(320.0, 180.0 + 8.0)
+	return p
+
 func _paper() -> Panel:
 	var p := Panel.new()
 	p.name = "Paper"
 	p.unique_name_in_owner = true
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	p.clip_contents = true
-	p.anchor_left = 0.5
-	p.anchor_top = 0.5
-	p.anchor_right = 0.5
-	p.anchor_bottom = 0.5
-	p.offset_left = -PAPER_SIZE.x * 0.5
-	p.offset_top = -PAPER_SIZE.y * 0.5 + 8.0
-	p.offset_right = PAPER_SIZE.x * 0.5
-	p.offset_bottom = PAPER_SIZE.y * 0.5 + 8.0
+	p.size = PAPER_SIZE
+	p.position = -PAPER_SIZE * 0.5
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = PAPER_COLOR
 	sb.border_color = Color(0.36, 0.34, 0.29)

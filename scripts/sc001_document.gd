@@ -1,5 +1,5 @@
 extends Control
-# SC-001: оверлей папки — четыре страницы, перелистывание, наклон за курсором.
+# SC-001: оверлей папки — четыре страницы, перелистывание, наклон боков (shear Y).
 
 signal opened
 signal closed
@@ -8,13 +8,15 @@ signal page_changed(index: int)
 const PAGE_COUNT: int = 4
 const EDGE_W: float = 20.0
 const TURN_TIME: float = 0.35
-const TILT_MAX: float = 3.0
-const TILT_SPAN: float = 260.0
+const SHEAR_MAX: float = 0.05
+const SHEAR_SPAN: float = 90.0
+const SHEAR_SMOOTH: float = 8.0
 const DIM_ALPHA: float = 0.45
 const OPEN_TIME: float = 0.45
 
 @onready var dim: ColorRect = %Dim
 @onready var vignette: TextureRect = %Vignette
+@onready var pivot: Node2D = %PaperPivot
 @onready var paper: Panel = %Paper
 @onready var cursor: ColorRect = %Cursor
 @onready var edge_l: ColorRect = %EdgeL
@@ -26,6 +28,8 @@ var page: int = 0
 var _settled: bool = false
 var _turning: bool = false
 var _rest_pos: Vector2 = Vector2.ZERO
+var _shear: float = 0.0
+var _mouse: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	visible = false
@@ -33,6 +37,8 @@ func _ready() -> void:
 	vignette.modulate.a = 0.0
 	edge_l.modulate.a = 0.0
 	edge_r.modulate.a = 0.0
+	_rest_pos = paper.position
+	_mouse = get_local_mouse_position()
 	_apply_page()
 
 # Открытие: лист поднимается со стола к камере
@@ -43,10 +49,12 @@ func open(origin: Vector2) -> void:
 	_settled = false
 	visible = true
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	# Курсор стартует из центра: до первого движения мыши лист стоит ровно
+	_mouse = get_viewport_rect().size * 0.5
+	_shear = 0.0
 	paper.pivot_offset = paper.size * 0.5
-	_rest_pos = paper.position
 	paper.scale = Vector2(0.6, 0.6)
-	paper.position = origin - paper.size * 0.3
+	paper.position = pivot.to_local(origin) - paper.size * 0.3
 	paper.modulate.a = 0.0
 	var tw: Tween = create_tween().set_parallel(true)
 	tw.tween_property(paper, "scale", Vector2.ONE, OPEN_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
@@ -73,29 +81,37 @@ func close() -> void:
 	tw.tween_property(vignette, "modulate:a", 0.0, 0.25)
 	tw.chain().tween_callback(func() -> void:
 		visible = false
-		paper.rotation = 0.0
+		_shear = 0.0
+		pivot.transform = Transform2D(Vector2(1.0, 0.0), Vector2(0.0, 1.0), pivot.position)
 		paper.position = _rest_pos)
 	closed.emit()
 
 func _process(delta: float) -> void:
 	if not is_open:
 		return
-	var mp: Vector2 = get_local_mouse_position()
-	cursor.position = mp - cursor.size * 0.5
-	_update_hover(_to_local(get_global_mouse_position()))
+	cursor.position = _mouse - cursor.size * 0.5
+	_update_hover(_to_local(_mouse))
 	if not _settled:
 		return
-	var half: Vector2 = get_viewport_rect().size * 0.5
-	var off: float = clampf((mp.x - half.x) / TILT_SPAN, -1.0, 1.0)
-	paper.rotation = lerp_angle(paper.rotation, deg_to_rad(-off * TILT_MAX), clampf(8.0 * delta, 0.0, 1.0))
+	_update_tilt(_mouse, delta)
+
+# Наклон боков: shear по Y, вертикальные рёбра листа заваливаются за курсором.
+# Отсчёт от центра листа, а не от вьюпорта: не зависит от размера окна.
+func _update_tilt(mp: Vector2, delta: float) -> void:
+	var off: float = clampf((mp.x - pivot.position.x) / SHEAR_SPAN, -1.0, 1.0)
+	_shear = lerpf(_shear, -off * SHEAR_MAX, clampf(SHEAR_SMOOTH * delta, 0.0, 1.0))
+	# Shear вокруг центра листа: origin пивота сохраняется, иначе лист уедет в угол
+	pivot.transform = Transform2D(Vector2(1.0, 0.0), Vector2(_shear, 1.0), pivot.position)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_open or not _settled:
 		return
 	if event is InputEventMouseMotion:
-		_update_hover(_to_local(event.position))
+		_mouse = event.position
+		_update_hover(_to_local(_mouse))
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_click(_to_local(event.position))
+		_mouse = event.position
+		_click(_to_local(_mouse))
 	elif event.is_action_pressed("ui_cancel"):
 		close()
 
