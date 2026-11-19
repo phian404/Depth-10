@@ -1,5 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://boony5t50v74f"]
+[gd_scene load_steps=24 format=3]
 
+[ext_resource type="PackedScene" path="res://scenes/SC001_Document.tscn" id="21_ndhvo"]
+[ext_resource type="Script" path="res://scripts/sc001_document.gd" id="22_5ff1c"]
 [ext_resource type="Material" path="res://materials/M_bulb.tres" id="mat_bulb"]
 [ext_resource type="Material" path="res://materials/M_ceiling.tres" id="mat_ceiling"]
 [ext_resource type="Material" path="res://materials/M_door.tres" id="mat_door"]
@@ -19,7 +21,7 @@
 [ext_resource type="CylinderMesh" path="res://meshes/SM_cyl8.tres" id="mesh_cyl"]
 [ext_resource type="CylinderMesh" path="res://meshes/SM_shade.tres" id="mesh_shade"]
 [ext_resource type="SphereMesh" path="res://meshes/SM_sphere.tres" id="mesh_sph"]
-[ext_resource type="Script" uid="uid://xbiuujc3dnk7" path="res://scripts/sc001_signing.gd" id="script"]
+[ext_resource type="Script" path="res://scripts/sc001_signing.gd" id="script"]
 
 [sub_resource type="Environment" id="Env"]
 background_mode = 1
@@ -350,7 +352,7 @@ material_override = ExtResource("mat_guard")
 mesh = ExtResource("mesh_box")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9781476, 0.2079117, 0, -0.2079117, 0.9781476, 0, 1.15, 0.82)
+transform = Transform3D(1, 0, 0, 0, 0.9781476, 0.2079117, 0, -0.2079117, 0.9781476, 0, 1.15, 1)
 current = true
 fov = 55.0
 
@@ -365,3 +367,33 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="DocumentLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="SC001_Document" type="Control" parent="DocumentLayer" instance=ExtResource("21_ndhvo")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("22_5ff1c")
+
+[node name="ReticleLayer" type="CanvasLayer" parent="."]
+layer = 4
+
+[node name="Dot" type="ColorRect" parent="ReticleLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1.0
+offset_bottom = 1.0
+mouse_filter = 2
+color = Color(0.92, 0.9, 0.85, 0.85)

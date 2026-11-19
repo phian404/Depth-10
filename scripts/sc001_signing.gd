@@ -1,15 +1,13 @@
 extends Node3D
-# SC-001 «Подписание»: обзор мышью, постукивание, мерцание лампы, fade-in.
+# SC-001 «Подписание»: обзор мышью, постукивание, мерцание лампы, прицел, папка.
 
 const YAW_LIMIT: float = 35.0
 const PITCH_LIMIT: float = 15.0
-const BASE_PITCH: float = -12.0
+const BASE_PITCH: float = -24.0
 const SENSITIVITY: float = 0.08
 const SMOOTH: float = 8.0
 const IDLE_HINT_TIME: float = 16.0
-const MIX_RATE: float = 44100.0
-const HUM_DB: float = -42.0
-const HUM_TRIM: float = 2.15
+const DOT_SCALE: Vector2 = Vector2(3.0, 3.0)
 const TAPS: Array[AudioStream] = [
 	preload("res://audio/SFX_foley_finger_tap_01.wav"),
 	preload("res://audio/SFX_foley_finger_tap_02.wav"),
@@ -20,6 +18,9 @@ const TAPS: Array[AudioStream] = [
 @onready var finger: Node3D = $Somov/Finger
 @onready var lamp: SpotLight3D = $Lamp/SpotLight3D
 @onready var fade: ColorRect = $FadeLayer/ColorRect
+@onready var folder: MeshInstance3D = $Folder
+@onready var dot: ColorRect = $ReticleLayer/Dot
+@onready var doc = $DocumentLayer/SC001_Document
 
 var target_yaw: float = 0.0
 var target_pitch: float = 0.0
@@ -32,11 +33,7 @@ var flicker_t: float = 0.0
 var dropout_timer: float = 12.0
 var dropout_left: float = 0.0
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var audio: AudioStreamPlayer
-var playback: AudioStreamGeneratorPlayback
-var hum_gain: float = 0.0
-var hum_env: float = 1.0
-var hum_phase: float = 0.0
+var hum: AudioStreamPlayer
 var tap_player: AudioStreamPlayer3D
 var last_tap: int = -1
 
@@ -49,16 +46,10 @@ func _ready() -> void:
 	win.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	base_energy = lamp.light_energy
-	hum_gain = db_to_linear(HUM_DB) * HUM_TRIM
-	# Процедурный звук: без файлов, генератор в буфер
-	var gen: AudioStreamGenerator = AudioStreamGenerator.new()
-	gen.mix_rate = MIX_RATE
-	gen.buffer_length = 0.4
-	audio = AudioStreamPlayer.new()
-	audio.stream = gen
-	add_child(audio)
-	audio.play()
-	playback = audio.get_stream_playback() as AudioStreamGeneratorPlayback
+	dot.pivot_offset = dot.size * 0.5
+	# Гул лампы отдельным узлом, чтобы бит LIGHTS_OUT гасил его одним вызовом
+	hum = preload("res://scripts/sc001_hum.gd").new()
+	add_child(hum)
 	# Стук пальца: три записанных варианта, позиция на костяшке
 	tap_player = AudioStreamPlayer3D.new()
 	tap_player.unit_size = 1.0
@@ -71,13 +62,18 @@ func _ready() -> void:
 	tw.tween_property(fade, "color:a", 0.0, 2.0)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if doc.is_open:
+		return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		var m: InputEventMouseMotion = event
 		target_yaw = clampf(target_yaw - m.relative.x * SENSITIVITY, -YAW_LIMIT, YAW_LIMIT)
 		target_pitch = clampf(target_pitch - m.relative.y * SENSITIVITY, -PITCH_LIMIT, PITCH_LIMIT)
 	elif event is InputEventMouseButton and event.pressed:
 		idle_time = 0.0
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if event.button_index == MOUSE_BUTTON_LEFT and _aim_on_folder():
+			doc.open(_folder_rect().get_center())
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -85,7 +81,27 @@ func _process(delta: float) -> void:
 	_update_look(delta)
 	_update_tapping(delta)
 	_update_lamp(delta)
-	_update_audio(delta)
+	hum.brightness = lamp.light_energy / maxf(base_energy, 0.001)
+	_update_reticle()
+
+# Прицел: точка 2×2, на папке — 6×6; в оверлее документа скрыт
+func _update_reticle() -> void:
+	dot.visible = not doc.is_open
+	if dot.visible:
+		dot.scale = DOT_SCALE if _aim_on_folder() else Vector2.ONE
+
+# Прямоугольник папки на экране по AABB меша
+func _folder_rect() -> Rect2:
+	var box: AABB = folder.get_aabb()
+	var rect: Rect2 = Rect2()
+	for i in 8:
+		var p: Vector2 = camera.unproject_position(folder.global_transform * box.get_endpoint(i))
+		rect = Rect2(p, Vector2.ZERO) if i == 0 else rect.expand(p)
+	return rect
+
+# Прицел в центре кадра попадает на папку
+func _aim_on_folder() -> bool:
+	return _folder_rect().has_point(get_viewport().get_visible_rect().size * 0.5)
 
 # Сглаженный обзор в пределах конуса
 func _update_look(delta: float) -> void:
@@ -128,23 +144,3 @@ func _update_lamp(delta: float) -> void:
 		dropout_left -= delta
 		e *= 0.35
 	lamp.light_energy = e
-
-# Гул лампы 50 Гц + гармоники, привязан к яркости
-func _update_audio(_delta: float) -> void:
-	if playback == null:
-		return
-	var frames: int = mini(playback.get_frames_available(), 16384)
-	if frames <= 0:
-		return
-	var bright: float = lamp.light_energy / maxf(base_energy, 0.001)
-	var k: float = 1.0 - exp(-1.0 / (0.008 * MIX_RATE))
-	var buf: PackedVector2Array = PackedVector2Array()
-	buf.resize(frames)
-	for i in frames:
-		hum_phase += 50.0 / MIX_RATE
-		if hum_phase > 1.0:
-			hum_phase -= 1.0
-		var hum: float = sin(TAU * hum_phase) * 0.6 + sin(TAU * hum_phase * 2.0) * 0.25 + sin(TAU * hum_phase * 3.0) * 0.1
-		hum_env = lerpf(hum_env, bright, k)
-		buf[i] = Vector2.ONE * clampf(hum * hum_gain * hum_env, -1.0, 1.0)
-	playback.push_buffer(buf)
