@@ -1,5 +1,7 @@
 # План: подготовка среды Depth-10 для Kilo Code
 
+> **Статус: выполнен.** 2026-11-19. Все шаги применены, коммит `f36f424`: `.gitattributes`, `.editorconfig`, `AGENTS.md`, `mcp.json`, `.kilo/kilo.jsonc`, `.kilo/command/{run,check}.md`, `scripts/smoke.gd`. Пять MCP-контроллеров работают, `validate` и headless-запуск проходят. Отличие: `AGENTS.md` позже расширен правилами сцены и проверенными ограничениями MCP.
+
 Версия 2. Заменяет исходный план целиком. Реализация — implementation-агентом, порядок обязательный.
 
 ---
