@@ -3,7 +3,6 @@ extends Control
 
 signal opened
 signal closed
-signal page_changed(index: int)
 
 const PAGE_COUNT: int = 4
 const EDGE_W: float = 20.0
@@ -30,6 +29,7 @@ var _turning: bool = false
 var _rest_pos: Vector2 = Vector2.ZERO
 var _shear: float = 0.0
 var _mouse: Vector2 = Vector2.ZERO
+var _closing: bool = false
 
 func _ready() -> void:
 	visible = false
@@ -39,11 +39,12 @@ func _ready() -> void:
 	edge_r.modulate.a = 0.0
 	_rest_pos = paper.position
 	_mouse = get_local_mouse_position()
-	_apply_page()
+	for i in pages.size():
+		pages[i].visible = i == page
 
 # Открытие: лист поднимается со стола к камере
 func open(origin: Vector2) -> void:
-	if is_open:
+	if is_open or _closing:
 		return
 	is_open = true
 	_settled = false
@@ -67,13 +68,12 @@ func open(origin: Vector2) -> void:
 
 # Закрытие: папка возвращается на стол, страница запоминается
 func close() -> void:
-	if not is_open or _turning:
+	if not is_open or _turning or _closing:
 		return
 	is_open = false
+	_closing = true
 	_settled = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	edge_l.modulate.a = 0.0
-	edge_r.modulate.a = 0.0
 	var tw: Tween = create_tween().set_parallel(true)
 	tw.tween_property(paper, "scale", Vector2(0.6, 0.6), 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tw.tween_property(paper, "modulate:a", 0.0, 0.3)
@@ -81,6 +81,7 @@ func close() -> void:
 	tw.tween_property(vignette, "modulate:a", 0.0, 0.25)
 	tw.chain().tween_callback(func() -> void:
 		visible = false
+		_closing = false
 		_shear = 0.0
 		pivot.transform = Transform2D(Vector2(1.0, 0.0), Vector2(0.0, 1.0), pivot.position)
 		paper.position = _rest_pos)
@@ -90,36 +91,8 @@ func _process(delta: float) -> void:
 	if not is_open:
 		return
 	cursor.position = _mouse - cursor.size * 0.5
-	_update_hover(_to_local(_mouse))
-	if not _settled:
-		return
-	_update_tilt(_mouse, delta)
-
-# Наклон боков: shear по Y, вертикальные рёбра листа заваливаются за курсором.
-# Отсчёт от центра листа, а не от вьюпорта: не зависит от размера окна.
-func _update_tilt(mp: Vector2, delta: float) -> void:
-	var off: float = clampf((mp.x - pivot.position.x) / SHEAR_SPAN, -1.0, 1.0)
-	_shear = lerpf(_shear, -off * SHEAR_MAX, clampf(SHEAR_SMOOTH * delta, 0.0, 1.0))
-	# Shear вокруг центра листа: origin пивота сохраняется, иначе лист уедет в угол
-	pivot.transform = Transform2D(Vector2(1.0, 0.0), Vector2(_shear, 1.0), pivot.position)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not is_open or not _settled:
-		return
-	if event is InputEventMouseMotion:
-		_mouse = event.position
-		_update_hover(_to_local(_mouse))
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_mouse = event.position
-		_click(_to_local(_mouse))
-	elif event.is_action_pressed("ui_cancel"):
-		close()
-
-# Экранная точка → локальные координаты листа (с учётом наклона)
-func _to_local(pos: Vector2) -> Vector2:
-	return paper.get_global_transform_with_canvas().affine_inverse() * pos
-
-func _update_hover(local: Vector2) -> void:
+	# Края листа: подсветка при наведении и увеличенный курсор
+	var local: Vector2 = _to_local(_mouse)
 	var sz: Vector2 = paper.size
 	var inside: bool = local.x >= 0.0 and local.y >= 0.0 and local.x <= sz.x and local.y <= sz.y
 	var hot_l: bool = inside and page > 0 and local.x < EDGE_W
@@ -127,6 +100,35 @@ func _update_hover(local: Vector2) -> void:
 	edge_l.modulate.a = 0.55 if hot_l else 0.0
 	edge_r.modulate.a = 0.55 if hot_r else 0.0
 	cursor.scale = Vector2(3.0, 3.0) if hot_l or hot_r else Vector2.ONE
+	if _settled:
+		# Наклон боков: shear по Y вокруг центра листа
+		var off: float = clampf((_mouse.x - pivot.position.x) / SHEAR_SPAN, -1.0, 1.0)
+		_shear = lerpf(_shear, -off * SHEAR_MAX, clampf(SHEAR_SMOOTH * delta, 0.0, 1.0))
+		pivot.transform = Transform2D(Vector2(1.0, 0.0), Vector2(_shear, 1.0), pivot.position)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_open:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		close()
+		get_viewport().set_input_as_handled()
+		return
+	# Пока лист ещё летит к камере, клик принадлежит оверлею, но ничего не делает
+	if not _settled:
+		if event is InputEventMouseButton and event.pressed:
+			get_viewport().set_input_as_handled()
+		return
+	if event is InputEventMouseMotion:
+		_mouse = event.position
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		_mouse = event.position
+		_click(_to_local(_mouse))
+		# Клик по оверлею не должен доходить до сцены: иначе закрытие и открытие сработают разом
+		get_viewport().set_input_as_handled()
+
+# Экранная точка → локальные координаты листа (с учётом наклона)
+func _to_local(pos: Vector2) -> Vector2:
+	return paper.get_global_transform_with_canvas().affine_inverse() * pos
 
 func _click(local: Vector2) -> void:
 	var sz: Vector2 = paper.size
@@ -147,11 +149,8 @@ func _turn(dir: int) -> void:
 	var from: Control = pages[page]
 	var to: Control = pages[next]
 	to.visible = true
-	to.position = Vector2.ZERO
-	to.rotation = 0.0
 	from.z_index = 1
 	page = next
-	page_changed.emit(page)
 	var tw: Tween = create_tween().set_parallel(true)
 	tw.tween_property(from, "position:x", -paper.size.x * dir, TURN_TIME).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(from, "rotation", deg_to_rad(-4.0 * dir), TURN_TIME)
@@ -161,10 +160,3 @@ func _turn(dir: int) -> void:
 		from.position = Vector2.ZERO
 		from.rotation = 0.0
 		_turning = false)
-
-func _apply_page() -> void:
-	for i in pages.size():
-		pages[i].visible = i == page
-		pages[i].position = Vector2.ZERO
-		pages[i].rotation = 0.0
-		pages[i].z_index = 0

@@ -1,7 +1,6 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=23 format=3 uid="uid://boony5t50v74f"]
 
 [ext_resource type="PackedScene" path="res://scenes/SC001_Document.tscn" id="21_ndhvo"]
-[ext_resource type="Script" path="res://scripts/sc001_document.gd" id="22_5ff1c"]
 [ext_resource type="Material" path="res://materials/M_bulb.tres" id="mat_bulb"]
 [ext_resource type="Material" path="res://materials/M_ceiling.tres" id="mat_ceiling"]
 [ext_resource type="Material" path="res://materials/M_door.tres" id="mat_door"]
@@ -21,7 +20,7 @@
 [ext_resource type="CylinderMesh" path="res://meshes/SM_cyl8.tres" id="mesh_cyl"]
 [ext_resource type="CylinderMesh" path="res://meshes/SM_shade.tres" id="mesh_shade"]
 [ext_resource type="SphereMesh" path="res://meshes/SM_sphere.tres" id="mesh_sph"]
-[ext_resource type="Script" path="res://scripts/sc001_signing.gd" id="script"]
+[ext_resource type="Script" uid="uid://xbiuujc3dnk7" path="res://scripts/sc001_signing.gd" id="script"]
 
 [sub_resource type="Environment" id="Env"]
 background_mode = 1
@@ -371,16 +370,10 @@ color = Color(0, 0, 0, 1)
 [node name="DocumentLayer" type="CanvasLayer" parent="."]
 layer = 5
 
-[node name="SC001_Document" type="Control" parent="DocumentLayer" instance=ExtResource("21_ndhvo")]
-visible = false
-layout_mode = 3
+[node name="SC001_Document" parent="DocumentLayer" instance=ExtResource("21_ndhvo")]
 anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("22_5ff1c")
 
 [node name="ReticleLayer" type="CanvasLayer" parent="."]
 layer = 4
