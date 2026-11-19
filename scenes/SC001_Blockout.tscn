@@ -1,86 +1,367 @@
-[gd_scene format=3]
+[gd_scene load_steps=22 format=3 uid="uid://boony5t50v74f"]
 
-[node name="SC001_Blockout" type="Node3D"]
+[ext_resource type="Material" path="res://materials/M_bulb.tres" id="mat_bulb"]
+[ext_resource type="Material" path="res://materials/M_ceiling.tres" id="mat_ceiling"]
+[ext_resource type="Material" path="res://materials/M_door.tres" id="mat_door"]
+[ext_resource type="Material" path="res://materials/M_floor.tres" id="mat_floor"]
+[ext_resource type="Material" path="res://materials/M_folder.tres" id="mat_folder"]
+[ext_resource type="Material" path="res://materials/M_guard.tres" id="mat_guard"]
+[ext_resource type="Material" path="res://materials/M_lamp.tres" id="mat_lamp"]
+[ext_resource type="Material" path="res://materials/M_metal.tres" id="mat_metal"]
+[ext_resource type="Material" path="res://materials/M_pen.tres" id="mat_pen"]
+[ext_resource type="Material" path="res://materials/M_skin.tres" id="mat_skin"]
+[ext_resource type="Material" path="res://materials/M_sleeve.tres" id="mat_sleeve"]
+[ext_resource type="Material" path="res://materials/M_somov.tres" id="mat_somov"]
+[ext_resource type="Material" path="res://materials/M_table_top.tres" id="mat_table_top"]
+[ext_resource type="Material" path="res://materials/M_wall_low.tres" id="mat_wall_low"]
+[ext_resource type="Material" path="res://materials/M_wall_up.tres" id="mat_wall_up"]
+[ext_resource type="BoxMesh" path="res://meshes/SM_box.tres" id="mesh_box"]
+[ext_resource type="CylinderMesh" path="res://meshes/SM_cyl8.tres" id="mesh_cyl"]
+[ext_resource type="CylinderMesh" path="res://meshes/SM_shade.tres" id="mesh_shade"]
+[ext_resource type="SphereMesh" path="res://meshes/SM_sphere.tres" id="mesh_sph"]
+[ext_resource type="Script" uid="uid://xbiuujc3dnk7" path="res://scripts/sc001_signing.gd" id="script"]
 
-[node name="Floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
-size = Vector3(4, 0.1, 3)
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0.031373, 0.035294, 0.043137, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.031373, 0.035294, 0.043137, 1)
+ambient_light_energy = 6.0
+glow_enabled = true
+glow_intensity = 0.35
+glow_hdr_threshold = 0.85
+fog_enabled = true
+fog_light_color = Color(0.031373, 0.035294, 0.043137, 1)
+fog_density = 0.04
 
-[node name="WallEastLeft" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.35, -0.975)
-size = Vector3(0.1, 2.7, 1.05)
+[node name="SC001" type="Node3D"]
+script = ExtResource("script")
 
-[node name="WallEastRight" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.35, 0.975)
-size = Vector3(0.1, 2.7, 1.05)
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
 
-[node name="WallEastLintel" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.4, 0)
-size = Vector3(0.1, 0.6, 0.9)
+[node name="Room" type="Node3D" parent="."]
 
-[node name="WallNorth" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, -1.5)
-size = Vector3(4, 2.7, 0.1)
+[node name="Floor" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(4.2, 0, 0, 0, 0.1, 0, 0, 0, 4.2, 0, -0.05, 0)
+material_override = ExtResource("mat_floor")
+mesh = ExtResource("mesh_box")
 
-[node name="WallSouth" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 1.5)
-size = Vector3(4, 2.7, 0.1)
+[node name="Ceiling" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(4.2, 0, 0, 0, 0.1, 0, 0, 0, 4.2, 0, 2.75, 0)
+material_override = ExtResource("mat_ceiling")
+mesh = ExtResource("mesh_box")
 
-[node name="WallWest" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.35, 0)
-size = Vector3(0.1, 2.7, 3)
+[node name="WallLowN" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(4.2, 0, 0, 0, 1.2, 0, 0, 0, 0.1, 0, 0.6, -2.05)
+material_override = ExtResource("mat_wall_low")
+mesh = ExtResource("mesh_box")
 
-[node name="Ceiling" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.65, 0)
-size = Vector3(4, 0.1, 3)
+[node name="WallUpN" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(4.2, 0, 0, 0, 1.5, 0, 0, 0, 0.1, 0, 1.95, -2.05)
+material_override = ExtResource("mat_wall_up")
+mesh = ExtResource("mesh_box")
 
-[node name="Table" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
-size = Vector3(1.2, 0.05, 0.8)
+[node name="WallLowS" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(4.2, 0, 0, 0, 1.2, 0, 0, 0, 0.1, 0, 0.6, 2.05)
+material_override = ExtResource("mat_wall_low")
+mesh = ExtResource("mesh_box")
 
-[node name="ChairKirill" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 1.1)
-size = Vector3(0.45, 0.1, 0.45)
+[node name="WallUpS" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(4.2, 0, 0, 0, 1.5, 0, 0, 0, 0.1, 0, 1.95, 2.05)
+material_override = ExtResource("mat_wall_up")
+mesh = ExtResource("mesh_box")
 
-[node name="LampBase" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.76, -0.1)
-size = Vector3(0.12, 0.02, 0.12)
+[node name="WallLowW" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(0.1, 0, 0, 0, 1.2, 0, 0, 0, 4, -2.05, 0.6, 0)
+material_override = ExtResource("mat_wall_low")
+mesh = ExtResource("mesh_box")
 
-[node name="LampStem" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.92, -0.1)
-size = Vector3(0.02, 0.3, 0.02)
+[node name="WallUpW" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(0.1, 0, 0, 0, 1.5, 0, 0, 0, 4, -2.05, 1.95, 0)
+material_override = ExtResource("mat_wall_up")
+mesh = ExtResource("mesh_box")
 
-[node name="LampShade" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.08, -0.1)
-size = Vector3(0.18, 0.1, 0.18)
+[node name="WallLowE" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(0.1, 0, 0, 0, 1.2, 0, 0, 0, 4, 2.05, 0.6, 0)
+material_override = ExtResource("mat_wall_low")
+mesh = ExtResource("mesh_box")
 
-[node name="Folder_" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.775, 0)
-size = Vector3(0.3, 0.02, 0.22)
+[node name="WallUpE" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(0.1, 0, 0, 0, 1.5, 0, 0, 0, 4, 2.05, 1.95, 0)
+material_override = ExtResource("mat_wall_up")
+mesh = ExtResource("mesh_box")
 
-[node name="Pen" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.775, 0.1)
-size = Vector3(0.15, 0.01, 0.02)
+[node name="Door" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(0.06, 0, 0, 0, 2.1, 0, 0, 0, 0.9, 1.97, 1.05, -1)
+material_override = ExtResource("mat_door")
+mesh = ExtResource("mesh_box")
 
-[node name="Glove_" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.775, 0.35)
-size = Vector3(0.12, 0.03, 0.18)
+[node name="DoorHandle" type="MeshInstance3D" parent="Room"]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.12, 1.92, 1, -0.7)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
 
-[node name="SomovSilhouette" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.8)
-size = Vector3(0.6, 1.3, 0.4)
+[node name="Table" type="Node3D" parent="."]
 
-[node name="HandLeft_" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 0.75, 0.6)
-size = Vector3(0.08, 0.04, 0.2)
+[node name="Top" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(1.5, 0, 0, 0, 0.03, 0, 0, 0, 1, 0, 0.735, 0)
+material_override = ExtResource("mat_table_top")
+mesh = ExtResource("mesh_box")
 
-[node name="HandRight_" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.75, 0.6)
-size = Vector3(0.08, 0.04, 0.2)
+[node name="Leg0" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.04, 0, 0, 0, 0.72, 0, 0, 0, 0.04, 0.69, 0.36, 0.44)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Leg1" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.04, 0, 0, 0, 0.72, 0, 0, 0, 0.04, -0.69, 0.36, 0.44)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Leg2" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.04, 0, 0, 0, 0.72, 0, 0, 0, 0.04, 0.69, 0.36, -0.44)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Leg3" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(0.04, 0, 0, 0, 0.72, 0, 0, 0, 0.04, -0.69, 0.36, -0.44)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Rail0" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(1.38, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, 0.69, 0.44)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Rail1" type="MeshInstance3D" parent="Table"]
+transform = Transform3D(1.38, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 0, 0.69, -0.44)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Lamp" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.55, 0.75, -0.15)
+
+[node name="Base" type="MeshInstance3D" parent="Lamp"]
+transform = Transform3D(0.18, 0, 0, 0, 0.02, 0, 0, 0, 0.18, 0, 0.01, 0)
+material_override = ExtResource("mat_lamp")
+mesh = ExtResource("mesh_cyl")
+
+[node name="Stand" type="MeshInstance3D" parent="Lamp"]
+transform = Transform3D(0.014488887, 0.07764572, 0, -0.0038822857, 0.28977776, 0, 0, 0, 0.015, 0.039, 0.165, 0)
+material_override = ExtResource("mat_metal")
+mesh = ExtResource("mesh_box")
+
+[node name="Shade" type="MeshInstance3D" parent="Lamp"]
+transform = Transform3D(0.9396926, -0.34202012, 0, 0.34202012, 0.9396926, 0, 0, 0, 1, 0.088, 0.3, 0)
+material_override = ExtResource("mat_lamp")
+cast_shadow = 0
+mesh = ExtResource("mesh_shade")
+
+[node name="Bulb" type="MeshInstance3D" parent="Lamp"]
+transform = Transform3D(0.045, 0, 0, 0, 0.045, 0, 0, 0, 0.045, 0.085, 0.252, 0)
+material_override = ExtResource("mat_bulb")
+cast_shadow = 0
+mesh = ExtResource("mesh_sph")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lamp"]
+transform = Transform3D(-4.371139e-08, 0.45864335, -0.88862044, 0, 0.88862044, 0.45864335, 1, 2.0047937e-08, -3.884283e-08, 0.085, 0.24, 0)
+light_color = Color(1, 0.721569, 0.380392, 1)
+light_energy = 2.0
+shadow_enabled = true
+spot_range = 4.0
+spot_attenuation = 1.6
+spot_angle = 36.0
+spot_angle_attenuation = 1.2
+
+[node name="Folder" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.31824702, 0, 0.024041547, 0, 0.02, 0, -0.03344911, 0, 0.22874005, 0.05, 0.76, 0.18)
+material_override = ExtResource("mat_folder")
+mesh = ExtResource("mesh_box")
+
+[node name="Pen" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.377757e-10, -0.13522962, -0.0020705524, 0.008, -6.119594e-09, 0, -9.050672e-11, -0.036234666, 0.007727407, 0.31, 0.754, 0.14)
+material_override = ExtResource("mat_pen")
+mesh = ExtResource("mesh_cyl")
+
+[node name="Kirill" type="Node3D" parent="."]
+
+[node name="LeftSleeve" type="MeshInstance3D" parent="Kirill"]
+transform = Transform3D(0.08, 0, 0, 0, 0.06, 0, 0, 0, 0.32, -0.12, 0.78, 0.46)
+material_override = ExtResource("mat_sleeve")
+mesh = ExtResource("mesh_box")
+
+[node name="LeftHand" type="MeshInstance3D" parent="Kirill"]
+transform = Transform3D(0.08, 0, 0, 0, 0.03, 0, 0, 0, 0.12, -0.12, 0.765, 0.25)
+material_override = ExtResource("mat_skin")
+mesh = ExtResource("mesh_box")
+
+[node name="RightSleeve" type="MeshInstance3D" parent="Kirill"]
+transform = Transform3D(0.08, 0, 0, 0, 0.06, 0, 0, 0, 0.3, 0.62, 0.78, 0.6)
+material_override = ExtResource("mat_sleeve")
+mesh = ExtResource("mesh_box")
+
+[node name="RightHand" type="MeshInstance3D" parent="Kirill"]
+transform = Transform3D(0.08, 0, 0, 0, 0.03, 0, 0, 0, 0.12, 0.6, 0.765, 0.4)
+material_override = ExtResource("mat_skin")
+mesh = ExtResource("mesh_box")
+
+[node name="Somov" type="Node3D" parent="."]
+
+[node name="Seat" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.45, 0, 0, 0, 0.04, 0, 0, 0, 0.45, 0, 0.46, -1.05)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="Back" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.45, 0, 0, 0, 0.4890738, 0.0083164675, 0, -0.10395585, 0.039125904, 0, 0.72, -1.3)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ChairLeg0" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.03, 0, 0, 0, 0.44, 0, 0, 0, 0.03, 0.19, 0.22, -0.86)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ChairLeg1" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.03, 0, 0, 0, 0.44, 0, 0, 0, 0.03, -0.19, 0.22, -0.86)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ChairLeg2" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.03, 0, 0, 0, 0.44, 0, 0, 0, 0.03, 0.19, 0.22, -1.24)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ChairLeg3" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.03, 0, 0, 0, 0.44, 0, 0, 0, 0.03, -0.19, 0.22, -1.24)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="Torso" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5795555, 0.06470476, 0, -0.15529144, 0.24148145, 0, 0.8, -1.12)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="Shoulders" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.55, 0, 0, 0, 0.1159111, 0.06470476, 0, -0.031058285, 0.24148145, 0, 1.12, -1.16)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="Head" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.22, 0, 0, 0, 0.22, 0, 0, 0, 0.22, 0, 1.3, -1.22)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_sph")
+
+[node name="ThighR" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.18, 0, 0, 0, 0.12, 0, 0, 0, 0.45, -0.14, 0.54, -0.82)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ThighL" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.18, 0, 0, 0, 0.12, 0, 0, 0, 0.45, 0.14, 0.54, -0.82)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ShinR" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.12, 0, 0, 0, 0.45, 0, 0, 0, 0.12, -0.14, 0.25, -0.62)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ShinL" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.12, 0, 0, 0, 0.45, 0, 0, 0, 0.12, 0.14, 0.25, -0.62)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="UpperArmR" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(-0.08987113, 0.0021506646, -0.029999359, 0, 0.08052152, 0.27999198, 0.0048145545, 0.040145498, -0.5599846, -0.285, 0.94, -0.86)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ForearmR" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.07, 0, 0, 0, 0.06, 0, 0, 0, 0.28, -0.2, 0.78, -0.38)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="HandR" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.08, 0, 0, 0, 0.03, 0, 0, 0, 0.12, -0.18, 0.765, -0.16)
+material_override = ExtResource("mat_skin")
+mesh = ExtResource("mesh_box")
+
+[node name="Finger" type="Node3D" parent="Somov"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0.756, -0.1)
+
+[node name="FingerMesh" type="MeshInstance3D" parent="Somov/Finger"]
+transform = Transform3D(0.012, 0, 0, 0, 0.012, 0, 0, 0, 0.07, 0, 0, 0.035)
+material_override = ExtResource("mat_skin")
+mesh = ExtResource("mesh_box")
+
+[node name="UpperArmL" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(-0.08909546, 0.011928608, -0.02000179, 0, 0.03139107, 0.380035, 0.012727907, 0.083500355, -0.14001271, 0.31, 0.89, -1.07)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="ForearmL" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(-0.06607011, -0.008167763, 0.07000134, 0, 0.06548812, 0.08000177, -0.023124468, 0.023336537, -0.20000444, 0.285, 0.66, -0.9)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="HandL" type="MeshInstance3D" parent="Somov"]
+transform = Transform3D(0.08, 0, 0, 0, 0.04, 0, 0, 0, 0.12, 0.25, 0.6, -0.74)
+material_override = ExtResource("mat_somov")
+mesh = ExtResource("mesh_box")
+
+[node name="Guard" type="Node3D" parent="."]
+transform = Transform3D(0.76604444, 0, 0.6427876, 0, 1, 0, -0.6427876, 0, 0.76604444, -1.62, 0, -1.85)
+
+[node name="LegL" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.14, 0, 0, 0, 0.9, 0, 0, 0, 0.14, -0.1, 0.45, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_box")
+
+[node name="LegR" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.14, 0, 0, 0, 0.9, 0, 0, 0, 0.14, 0.1, 0.45, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_box")
+
+[node name="Torso" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.4, 0, 0, 0, 0.6, 0, 0, 0, 0.22, 0, 1.2, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_box")
+
+[node name="Shoulders" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.52, 0, 0, 0, 0.12, 0, 0, 0, 0.22, 0, 1.54, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_box")
+
+[node name="Head" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1.72, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_sph")
+
+[node name="ArmL" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.08, 0, 0, 0, 0.6, 0, 0, 0, 0.1, -0.28, 1.2, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_box")
+
+[node name="ArmR" type="MeshInstance3D" parent="Guard"]
+transform = Transform3D(0.08, 0, 0, 0, 0.6, 0, 0, 0, 0.1, 0.28, 1.2, 0)
+material_override = ExtResource("mat_guard")
+mesh = ExtResource("mesh_box")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9848077, 0.17364818, 0, -0.17364818, 0.9848077, 0, 1.15, 1)
+transform = Transform3D(1, 0, 0, 0, 0.9781476, 0.2079117, 0, -0.2079117, 0.9781476, 0, 1.15, 0.82)
+current = true
+fov = 55.0
 
-[node name="TempLight" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.2, -0.1)
-light_color = Color(1, 0.72, 0.38, 1)
+[node name="FadeLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ColorRect" type="ColorRect" parent="FadeLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
